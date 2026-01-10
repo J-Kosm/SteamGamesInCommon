@@ -6,6 +6,8 @@ WORKDIR /app
 # Copy package.json and similarly named files like package-lock.json to the working directory
 COPY package*.json ./
 
+RUN apt-get update && apt-get install -y iputils-ping
+
 # Install dependencies, including Vite
 RUN npm install
 RUN npm install -D vite

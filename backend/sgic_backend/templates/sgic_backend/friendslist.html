@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if friendslist %}
+      <ul>
+      {% for id, player_data in friendslist.items %}
+        <li>
+          <p>{{ player_data.username }}</p>
+          <img src={{ player_data.avatarfull }} alt="">
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>Boooooo</p>
+    {% endif %}
+  </body>
+</html>

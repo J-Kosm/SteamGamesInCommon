@@ -1,5 +1,18 @@
 services:
+  frontend:
+    container_name: vue-frontend
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.5.0.2
+
   backend:
+    container_name: django-backend
     build: ./backend
     env_file:
       - .env
@@ -7,10 +20,15 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.5.0.3
 
-  frontend:
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
+networks:
+  custom_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

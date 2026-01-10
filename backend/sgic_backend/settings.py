@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-j31yhr+(9_mtxaz*t2=bz&d-os^rxgbk$&p)-k%g*^u++*vh)s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # manual
+    "corsheaders",
+    # my apps
+    "sgic_backend",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -117,5 +122,11 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+# custom
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
+if not STEAM_API_KEY:
+    raise RuntimeError("STEAM_API_KEY is not set.")
+
+# Cors
+CORS_ALLOW_ALL_ORIGINS = True
