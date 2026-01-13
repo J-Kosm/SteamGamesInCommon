@@ -5,14 +5,17 @@ from .services import get_user_friendslist
 
 def get_friendslist(request):
     if request.method == "GET":
-        steam_id = request.GET.get("steam_id")
+        steam_id = request.GET.get("user_steam_id")
         
-        friendslist = get_user_friendslist(steam_id)
+        friends_dict = get_user_friendslist(steam_id)
 
-        template = loader.get_template("./sgic_backend/friendslist.html")
-        context = { "friendslist" : friendslist }
-        return HttpResponse(template.render(context, request))
+        return JsonResponse(friends_dict)
+        # template = loader.get_template("./sgic_backend/friendslist.html")
+        # context = { "friendslist" : friends_dict }
+        # return HttpResponse(template.render(context, request))
     else:
         return HttpResponse("Nothing...?")
 
-
+def get_shared_games(request): 
+    return HttpResponse("hiiii post")
+    pass

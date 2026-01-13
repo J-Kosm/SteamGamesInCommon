@@ -21,5 +21,6 @@ from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.get_friendslist, name="Friends")
+    path("", views.get_friendslist, name="Friends"),
+    path("shared/", views.get_shared_games, name="Shared")
 ]

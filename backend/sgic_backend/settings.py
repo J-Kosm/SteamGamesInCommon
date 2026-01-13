@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# custom
+### custom
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 if not STEAM_API_KEY:
@@ -130,3 +130,6 @@ if not STEAM_API_KEY:
 
 # Cors
 CORS_ALLOW_ALL_ORIGINS = True
+
+# CSRF
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']

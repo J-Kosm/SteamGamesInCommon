@@ -1,5 +1,7 @@
 import requests
+import json
 from django.conf import settings
+
 
 KEY = settings.STEAM_API_KEY
 
@@ -34,6 +36,7 @@ def get_user_data_from_id(user_ids):
     friends_dict = {}
     for player in response.json()["response"]["players"]:
         friends_dict[player["steamid"]] = {
+            "steam_id": player["steamid"],
             "username": player["personaname"],
             "avatarfull": player["avatarfull"]
             }

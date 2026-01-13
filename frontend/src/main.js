@@ -1,12 +1,34 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
+import { createPinia, setMapStoreSuffix  } from 'pinia';
+import { createMemoryHistory, createRouter } from 'vue-router';
+
+// Views
 import App from './App.vue'
-import Apptest from './Apptest.vue'
-import MyForm from './components/MyForm.vue'
+import SearchView from './components/SearchView.vue';
+import SelectFriendsView from './components/SelectFriendsView.vue';
 
 
+//Store
+setMapStoreSuffix("")
+const pinia = createPinia()
+
+
+// Router
+const routes = [
+    { path: '/', component: SearchView },
+    { path: '/select_friends', component: SelectFriendsView },
+];
+export const router = createRouter({
+  history: createMemoryHistory(),
+  routes
+});
+
+// Start
+const app = createApp(App)
+app.use(pinia)
+app.use(router)
+app.mount('#app')
+
+
+// Log
 console.log("VUE BOOTSTRAP STARTED")
-
-
-// createApp(App).mount('#app')
-// createApp(Apptest).mount('#app')
-createApp(MyForm).mount('#app')

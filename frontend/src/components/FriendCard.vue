@@ -1,21 +1,15 @@
 <script>
 export default {
-    data() {
-        return {
-            username: "",
-            avatar_source
-        }
-    }
+    props: ['steam_id', 'username', 'avatarfull'],
 }
 </script>
 
 <template>
-    <div>
-        <img src="" alt="">
-        <p>
-
-        </p>
-    </div>
+    <li>
+        <input @click="$emit('friend_selected', this.steam_id)" type="checkbox" name="" id="">
+        <img :src="this.avatarfull" alt="">
+        {{ this.username }}
+    </li>
 </template>
 
 <style>

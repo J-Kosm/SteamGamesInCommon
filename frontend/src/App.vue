@@ -1,14 +1,24 @@
-<script setup>
-import { ref } from "vue"
+<script>
+import { mapStores } from 'pinia'
+import { useMyStore } from './stores/myStore';
 
-const count = ref(0)
+export default {
+  data() {
+    return {
+
+    }
+  },
+  computed: {
+    ...mapStores(useMyStore)
+  }
+}
+
 
 console.log("APP SCRIPT SETUP RUN")
 </script>
 
 <template>
-  <div>
-    <p>Count: {{ count }}</p>
-    <button @click="count++">Increment</button>
-  </div>
+  <main>
+    <RouterView />
+  </main>
 </template>
