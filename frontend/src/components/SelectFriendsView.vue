@@ -1,7 +1,12 @@
 <script>
 import { mapStores } from 'pinia';
+import Cookies from "js-cookie"
 import { useMyStore } from '../stores/myStore';
 import FriendCard from './FriendCard.vue';
+import api from '@/axios';
+
+const csrfToken = Cookies.get("csrftoken")
+api.defaults.headers.common["X-CSRFToken"] = csrfToken
 
 
     export default {
@@ -28,15 +33,11 @@ import FriendCard from './FriendCard.vue';
             },
             async submitFriends() {
                 const url = "http://localhost:8000/shared/"
-                // const params = url + ? + 
-                const response = await fetch(url, {
-                    method: "POST"
-                })
-
-
-                // const response = await fetch((url + "?" + params.toString()), {
-                //     method: "GET",
-                // })
+                console.log(this.myStoreStore.get_selected_friends)
+                const data = {
+                    selected_friends: this.myStoreStore.get_selected_friends
+                }
+                const response = await api.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } })
             },
         }
     }

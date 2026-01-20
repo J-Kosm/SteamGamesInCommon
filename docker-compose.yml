@@ -1,4 +1,5 @@
 services:
+
   frontend:
     container_name: vue-frontend
     build: ./frontend
@@ -14,6 +15,8 @@ services:
   backend:
     container_name: django-backend
     build: ./backend
+    depends_on:
+      - database
     env_file:
       - .env
     ports:
@@ -21,9 +24,28 @@ services:
     volumes:
       - ./backend:/app
     tty: true
+    environment:
+      STEAM_API_KEY: ${STEAM_API_KEY}
     networks:
       custom_net:
         ipv4_address: 10.5.0.3
+
+  database:
+    container_name: postgresql-database
+    image: postgres:18
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      custom_net:
+        ipv4_address: 10.5.0.4
+
+volumes:
+  postgres_data:
 
 networks:
   custom_net:

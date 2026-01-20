@@ -8,7 +8,9 @@ export const useMyStore = defineStore('myStore', {
         selected_friends: [],
     }),
     getters: {
-    
+        get_selected_friends(state) {
+            return state.selected_friends
+        }
     },
     actions: {
         

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # manual
     "corsheaders",
+    "django.contrib.postgres",
     # my apps
     "sgic_backend",
 ]
@@ -78,10 +79,24 @@ WSGI_APPLICATION = "sgic_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DB_NAME = os.environ.get("DB_NAME")
+if not DB_NAME:
+    raise RuntimeError("DB_NAME is not set.")
+DB_USERNAME = os.environ.get("DB_USERNAME")
+if not DB_NAME:
+    raise RuntimeError("DB_USERNAME is not set.")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+if not DB_NAME:
+    raise RuntimeError("DB_PASSWORD is not set.")
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DB_NAME,
+        "USER": DB_USERNAME,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": "database",
+        "PORT": 5432,
     }
 }
 
@@ -129,7 +144,8 @@ if not STEAM_API_KEY:
     raise RuntimeError("STEAM_API_KEY is not set.")
 
 # Cors
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']

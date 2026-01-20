@@ -1,6 +1,9 @@
 <script>
 import { mapStores } from 'pinia';
 import { useMyStore } from '../stores/myStore';
+import api from '@/axios';
+
+
 
 export default {
     data() {
@@ -12,33 +15,21 @@ export default {
         ...mapStores(useMyStore)
     },
     methods: {
-        async submitGet(e) {
+        async submitGet() {
             const url = "http://localhost:8000/"
-            const params = new URLSearchParams({
-                user_steam_id: this.user_steam_id
-            })
             try {
-                const response = await fetch((url + "?" + params.toString()), {
-                    method: "GET",
+                const response = await api.get(url, {
+                    params: {
+                        user_steam_id: this.user_steam_id
+                    }
                 })
-                if (!response.ok) {
-                    throw new Error("Request Failed")
-                }
-                if (this.myStore) {
-                    console.log("store is loaded")
-                }
-                if (this.myStoreStore) {
-                    console.log("storestore is loaded")
-                }
                 // update store
-                this.myStoreStore.friendslist = await response.json()
+                this.myStoreStore.friendslist = response.data
                 this.myStoreStore.user_steam_id = this.user_steam_id
                 // change view
                 this.$router.push('/select_friends')
-
-            } catch (err) {
-                console.log("Error")
-                console.log(err)
+            } catch (error) {
+                console.error(error)
             }
         },
     }
