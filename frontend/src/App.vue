@@ -22,3 +22,5 @@ console.log("APP SCRIPT SETUP RUN")
     <RouterView />
   </main>
 </template>
+
+

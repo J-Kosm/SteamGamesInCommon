@@ -32,12 +32,13 @@ api.defaults.headers.common["X-CSRFToken"] = csrfToken
                 }
             },
             async submitFriends() {
-                const url = "http://localhost:8000/shared/"
-                console.log(this.myStoreStore.get_selected_friends)
-                const data = {
-                    selected_friends: this.myStoreStore.get_selected_friends
-                }
-                const response = await api.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+                // const url = "http://localhost:8000/shared/"
+                // console.log(this.myStoreStore.get_selected_friends)
+                // const data = {
+                //     selected_friends: this.myStoreStore.get_selected_friends
+                // }
+                // const response = await api.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+                this.$router.push('/shared')
             },
         }
     }

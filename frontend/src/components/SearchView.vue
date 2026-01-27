@@ -3,12 +3,10 @@ import { mapStores } from 'pinia';
 import { useMyStore } from '../stores/myStore';
 import api from '@/axios';
 
-
-
 export default {
     data() {
         return {
-            steam_id: ""
+            user_steam_id: ""
         }
     },
     computed: {

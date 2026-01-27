@@ -3,9 +3,11 @@ import { createPinia, setMapStoreSuffix  } from 'pinia';
 import { createMemoryHistory, createRouter } from 'vue-router';
 
 // Views
-import App from './App.vue'
+import App from './App.vue';
 import SearchView from './components/SearchView.vue';
 import SelectFriendsView from './components/SelectFriendsView.vue';
+import SharedGamesView from './components/SharedGamesView.vue';
+import TestView from './components/TestView.vue';
 
 
 //Store
@@ -17,6 +19,7 @@ const pinia = createPinia()
 const routes = [
     { path: '/', component: SearchView },
     { path: '/select_friends', component: SelectFriendsView },
+    { path: '/shared', component: SharedGamesView }
 ];
 export const router = createRouter({
   history: createMemoryHistory(),

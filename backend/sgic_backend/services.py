@@ -2,9 +2,8 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from django.conf import settings
+from django.core import serializers
 from .models import Game
-
-
 
 KEY = settings.STEAM_API_KEY
 
@@ -53,7 +52,6 @@ def get_user_friendslist(user_id):
     return friends_dict
 
 
-
 def get_game_tags(appid):
     request_path = f"https://store.steampowered.com/app/{appid}/"
 
@@ -73,62 +71,48 @@ def get_game_tags(appid):
 
     return app_tags
 
-def check_if_game_in_db(appid):
-    game_exists = False
 
-    
-
-
-    return game_exists
-
-def get_owned_games(user_id):
+def get_games_dict(user_id):
     request_path = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key={KEY}&steamid={user_id}&include_appinfo=true"
-
     response = requests.get(request_path)
     response.raise_for_status()
     if not response:
         raise Exception(f"Failure. Status code: {response.status_code}")
-    
-    data = response.json()["response"]["games"]
 
+    owned_games_set = set()
     owned_games_dict = {}
-    new_count = 0
-    stored_count = 0
-    for game in data:
-        owned_games_dict[game["appid"]] = {
-            "name": game["name"],
-            "img_icon_url": game["img_icon_url"]
-        }
 
-        
-        # check if game is in db already
-        if not Game.objects.filter(appid=game["appid"]).exists():
-            print("New Game")
-            print(game["name"])
-            game_tags = get_game_tags(game["appid"])
-            game = Game(appid=game["appid"], name=game["name"], img_icon_url=game["img_icon_url"], tags=game_tags)
-            game.save()
-            new_count += 1
-
-        # If game is already present in db...
-        else:
-            # game = Game.objects.filter(game["appid"])
-            print("Game present")
-            print(game["name"])
-            stored_count +=1
-        
-        
-    print(f"New games: {new_count}")
-    print(f"Games already stored: {stored_count}")
-
-        
-
-    return owned_games_dict
+    try:
+        data = response.json()["response"]["games"]
+        for game in data:
+            owned_games_set.add(game["appid"])
+            owned_games_dict[game["appid"]] = {
+                "name": game["name"],
+                "img_icon_url": game["img_icon_url"]
+            }
+    except:
+        print(f"User {user_id} had no games or is set to private.")
     
+    return owned_games_set, owned_games_dict
 
 
+def process_shared_games_dict(shared_games_dict: dict):
+    for game in shared_games_dict:
+ 
+        if not Game.objects.filter(appid=game).exists(): 
+            # print debug
+            print(f"New game: {shared_games_dict[game]["name"]}")
+
+            game_tags = get_game_tags(game)
+            game = Game(appid=game, name=shared_games_dict[game]["name"], img_icon_url=shared_games_dict[game]["img_icon_url"], tags=game_tags)
+            game.save()
+        else:
+            # print debug
+            print(f"Old game: {shared_games_dict[game]["name"]}")
 
 
-def add_game_to_db(appid):
-
-    return None
+def get_games_from_db(games_set: set):
+    queryset = Game.objects.filter(appid__in=games_set).values("name", "img_icon_url", "tags")
+    data = list(queryset)
+    
+    return data
