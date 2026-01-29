@@ -20,10 +20,9 @@ export default {
     },
     computed: {
         ...mapStores(useMyStore),
-
     },
     methods: {
-        async getSharedGames(selected_friends) {
+        async getSharedGames() {
             const url = "http://localhost:8000/shared/"
             const data = {
                     selected_friends: this.myStoreStore.get_selected_friends,
@@ -33,7 +32,6 @@ export default {
 
             try {
                 const response = await api.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-                console.log(response.data)
                 this.myStoreStore.shared_games = response.data
 
             } catch (err) {
@@ -42,7 +40,7 @@ export default {
                 this.loading = false
                 this.loaded = true
             }
-        }
+        },
     }
 }
 </script>
@@ -57,19 +55,35 @@ Loading...
 </div>
 
 <div v-if="loaded" class="content">
-    <div>
-        Here are the games you have in common with: {{ this.myStoreStore.get_selected_friends }}
+    <div class="head">
+        Here are the games you have in common with: {{ this.myStoreStore.get_selected_friends_usernames.join(", ") }}
     </div>
-    <GameCard
-        v-for="game in this.myStoreStore.get_shared_games"
-        :app_id="game['appid']"
-        :name="game['name']"
-        :img_icon_url="game['img_icon_url']"
-    
-    />
+    <br>
+    <div>
+        <span>Filter by tags:</span>
+    </div>
+    <br>
+    <div class="card-container">
+        <GameCard
+            v-for="game in this.myStoreStore.get_shared_games"
+            :app_id="game['appid']"
+            :name="game['name']"
+            :img_icon_url="game['img_icon_url']"
+        
+        />
+    </div>
 </div>
 </template>
 
 <style>
+.head {
+    margin-bottom: 1fr;
+}
+.card-container {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
 
 </style>

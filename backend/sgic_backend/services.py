@@ -112,7 +112,7 @@ def process_shared_games_dict(shared_games_dict: dict):
 
 
 def get_games_from_db(games_set: set):
-    queryset = Game.objects.filter(appid__in=games_set).values("name", "img_icon_url", "tags")
+    queryset = Game.objects.filter(appid__in=games_set).values("appid", "name", "img_icon_url", "tags")
     data = list(queryset)
     
     return data

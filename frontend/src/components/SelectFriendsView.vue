@@ -45,20 +45,31 @@ api.defaults.headers.common["X-CSRFToken"] = csrfToken
 </script>
 
 <template>
-    <p>Your friendslist</p>
-    <p>Select your friends and then press "Submit" to see what games you have in common.</p>
-    <button type="button" v-on:click="submitFriends">Submit</button>
+    <div>
+        <p>Your friendslist</p>
+        <p>Select your friends and then press "Submit" to see what games you have in common.</p>
+        <button type="button" v-on:click="submitFriends">Submit</button>
+    </div>
 
-    <FriendCard
-        @friend_selected="onFriend_selected"
-        v-for="friend in this.myStoreStore.friendslist"
-        :steam_id="friend.steam_id"
-        :username="friend.username"
-        :avatarfull="friend.avatarfull"
-    />
+    <div class="friend-menu">
+        <FriendCard
+            @friend_selected="onFriend_selected"
+            v-for="friend in this.myStoreStore.friendslist"
+            :steam_id="friend.steam_id"
+            :username="friend.username"
+            :avatarfull="friend.avatarfull"
+        />
+    </div>
+
 
 </template>
 
 <style>
+.friend-menu {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+    gap: 10px;
+}
 
 </style>

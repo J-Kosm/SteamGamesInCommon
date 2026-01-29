@@ -1,17 +1,42 @@
 <script>
 export default {
     props: ['app_id', 'name', 'img_icon_url'],
+    data() {
+        return {
+            img_src: `https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/${this.app_id}/${this.img_icon_url}.jpg`
+        }
+    },
     
 }
 </script>
 
 <template>
-    <div>
-        <img src="https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/{{this.app_id}}/{{this.img_icon_url}}.jpg" alt="">
-        <p>{{ this.name }}</p>
+    <div class="game-card">
+        <img :src="img_src" alt="">
+        <span>{{ this.name }}</span>
     </div>
 </template>
 
 <style>
+.game-card {
+  position: relative;
+  display: flex;
+  border-style:ridge;
+  width: auto;
+  height: auto;
+  align-items: center;
+  
+}
+.game-card img {
+    max-height: 32px;
+    max-width: 32px;
+    
+    
+}
+.game-card span {
+    padding: 4px;
+    margin: auto;
+    
+}
 
 </style>

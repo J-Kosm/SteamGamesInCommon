@@ -22,6 +22,7 @@ export default {
                     }
                 })
                 // update store
+                console.log(response.data)
                 this.myStoreStore.friendslist = response.data
                 this.myStoreStore.user_steam_id = this.user_steam_id
                 // change view
