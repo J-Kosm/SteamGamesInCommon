@@ -98,7 +98,6 @@ def get_games_dict(user_id):
 
 def process_shared_games_dict(shared_games_dict: dict):
     for game in shared_games_dict:
- 
         if not Game.objects.filter(appid=game).exists(): 
             # print debug
             print(f"New game: {shared_games_dict[game]["name"]}")
@@ -116,3 +115,8 @@ def get_games_from_db(games_set: set):
     data = list(queryset)
     
     return data
+
+
+# from a list of users, get only their multiplayer games, and then return only those which they have in common.
+def get_shared_multiplayer_games():
+    return 

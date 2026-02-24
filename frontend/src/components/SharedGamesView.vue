@@ -12,7 +12,8 @@ export default {
         return {
             loading: true,
             loaded: false,
-            error: null,
+            empty: false,
+            multiplayer_only: false
         }
     },
     created() {
@@ -38,20 +39,27 @@ export default {
                 this.error = err.toString()
             } finally {
                 this.loading = false
-                this.loaded = true
+                if (this.myStoreStore.shared_games.length == 0) {
+                    this.empty = true
+                } else {
+                    this.loaded = true
+                }
             }
         },
+        filterMultiplayer() {
+            this.multiplayer_only = true
+        }
     }
 }
 </script>
 
 <template>
 <div v-if="loading" class="loading">
-Loading...
+    Loading...
 </div>
 
-<div v-if="error" class="error">
-
+<div v-if="empty" class="empty">
+    There were no games in common :c
 </div>
 
 <div v-if="loaded" class="content">
@@ -60,16 +68,25 @@ Loading...
     </div>
     <br>
     <div>
-        <span>Filter by tags:</span>
+        <button v-on:click="filterMultiplayer">
+            Show Multiplayer Only
+        </button>
     </div>
     <br>
     <div class="card-container">
         <GameCard
+            v-if="multiplayer_only"
+            v-for="game in this.myStoreStore.get_shared_multiplayer_games"
+            :app_id="game['appid']"
+            :name="game['name']"
+            :img_icon_url="game['img_icon_url']"
+        />
+        <GameCard
+            v-else
             v-for="game in this.myStoreStore.get_shared_games"
             :app_id="game['appid']"
             :name="game['name']"
             :img_icon_url="game['img_icon_url']"
-        
         />
     </div>
 </div>

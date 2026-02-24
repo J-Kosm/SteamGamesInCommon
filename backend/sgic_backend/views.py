@@ -27,6 +27,7 @@ def get_shared_games(request: HttpRequest):
         # then update the dict to only contain the shared games
         ## friend_games_dict is unused here.
         for friend in selected_friends:
+            print(friend)
             friend_games_set, friend_games_dict = get_games_dict(friend)
             shared_games_set.intersection_update(friend_games_set)
             shared_games_dict = {x: shared_games_dict[x] for x in shared_games_set}

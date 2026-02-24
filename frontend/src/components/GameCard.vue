@@ -21,7 +21,7 @@ export default {
 .game-card {
   position: relative;
   display: flex;
-  border-style:ridge;
+  border-style:solid;
   width: auto;
   height: auto;
   align-items: center;
@@ -30,8 +30,6 @@ export default {
 .game-card img {
     max-height: 32px;
     max-width: 32px;
-    
-    
 }
 .game-card span {
     padding: 4px;

@@ -16,8 +16,20 @@ export const useMyStore = defineStore('myStore', {
             return state.user_steam_id
         },
         get_shared_games(state) {
-            console.log(state.shared_games)
             return state.shared_games
+        },
+        get_shared_multiplayer_games(state) {
+            const shared_multiplayer_games = []
+            const mutliplayer_tags = ["Multiplayer", "Co-op", "Online Co-Op", "Local Co-Op", "PvP", "Team-Based"]
+
+            for (let i = 0; i < state.shared_games.length; i++) {
+
+                if (state.shared_games[i]["tags"].some(j => mutliplayer_tags.includes(j))) {
+                    console.log(state.shared_games[i]["name"])
+                    shared_multiplayer_games.push(state.shared_games[i])
+                }
+            }
+            return shared_multiplayer_games
         },
         get_selected_friends_usernames(state) {
             const data = []
