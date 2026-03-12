@@ -1,3 +1,5 @@
 .env
 secrets/
 backend/sgic_backend/__pycache__/
+backend/sgic_backend/__pycache__/services.cpython-314.pyc
+backend/sgic_backend/__pycache__/views.cpython-314.pyc
