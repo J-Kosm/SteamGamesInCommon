@@ -26,11 +26,10 @@ export default {
         async getSharedGames() {
             const url = "http://localhost:8000/shared/"
             const data = {
-                    selected_friends: this.myStoreStore.get_selected_friends,
+                    selected_friends: Array.from(this.myStoreStore.get_selected_friends),
                     user_steam_id: this.myStoreStore.get_user_steam_id
                 }
             this.loading = true
-
             try {
                 const response = await api.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } })
                 this.myStoreStore.shared_games = response.data
@@ -54,25 +53,22 @@ export default {
 </script>
 
 <template>
-<div v-if="loading" class="loading">
-    Loading...
+<div v-if="loading" class="loading panel">
+    <p>Loading...</p>
 </div>
 
-<div v-if="empty" class="empty">
-    There were no games in common :c
+<div v-if="empty" class="empty panel">
+    <p>There were no games in common :c</p>
 </div>
 
 <div v-if="loaded" class="content">
-    <div class="head">
-        Here are the games you have in common with: {{ this.myStoreStore.get_selected_friends_usernames.join(", ") }}
-    </div>
-    <br>
-    <div>
+    <div class="head panel">
+        <p>Here are the games you have in common with: {{ this.myStoreStore.get_selected_friends_usernames.join(", ") }}</p>
         <button v-on:click="filterMultiplayer">
             Show Multiplayer Only
         </button>
     </div>
-    <br>
+
     <div class="card-container">
         <GameCard
             v-if="multiplayer_only"

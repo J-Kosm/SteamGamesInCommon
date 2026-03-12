@@ -1,4 +1,4 @@
-from django.http import HttpRequest, JsonResponse, HttpResponse
+from django.http import HttpRequest, JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .services import get_user_friendslist, get_games_dict, process_shared_games_dict, get_games_from_db
@@ -6,11 +6,13 @@ from .services import get_user_friendslist, get_games_dict, process_shared_games
 @ensure_csrf_cookie
 def get_friendslist(request: HttpRequest):
     if request.method == "GET":
-        steam_id = request.GET.get("user_steam_id")
-        
-        friends_dict = get_user_friendslist(steam_id)
-
-        return JsonResponse(friends_dict)
+        try:
+            steam_id = request.GET.get("user_steam_id")
+            friends_dict = get_user_friendslist(steam_id)
+            return JsonResponse(friends_dict)
+        except:
+            # If anything goes wrong with the request, like an invalid Steam ID, send error 400 
+            return HttpResponseBadRequest()
     else:
         return HttpResponse("Nothing...?")
 

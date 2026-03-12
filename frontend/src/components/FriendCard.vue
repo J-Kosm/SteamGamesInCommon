@@ -36,6 +36,7 @@ export default {
   text-align: center;
   border-style: solid;
   margin: auto;
+  background-color: var(--panel-color);
 }
 .selected {
     border-color: blue;

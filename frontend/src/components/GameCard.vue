@@ -25,7 +25,7 @@ export default {
   width: auto;
   height: auto;
   align-items: center;
-  
+  background-color: var(--panel-color);
 }
 .game-card img {
     max-height: 32px;
