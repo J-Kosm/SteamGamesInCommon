@@ -2,6 +2,10 @@ import { createApp } from 'vue';
 import { createPinia, setMapStoreSuffix  } from 'pinia';
 import { createMemoryHistory, createRouter } from 'vue-router';
 
+// Style
+import './assets/css/main.css';
+
+
 // Views
 import App from './App.vue';
 import SearchView from './components/SearchView.vue';

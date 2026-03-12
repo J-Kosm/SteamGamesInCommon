@@ -5,7 +5,7 @@ export const useMyStore = defineStore('myStore', {
         username: "",
         user_steam_id: "",
         friendslist: {},
-        selected_friends: [],
+        selected_friends: new Set(),
         shared_games: {},
     }),
     getters: {
@@ -33,8 +33,8 @@ export const useMyStore = defineStore('myStore', {
         },
         get_selected_friends_usernames(state) {
             const data = []
-            for (let i = 0; i < state.selected_friends.length; i++) {
-                data.push(state.friendslist[state.selected_friends[i]].username)
+            for (const user of state.selected_friends) {
+                data.push(state.friendslist[user].username)
             }
             return data
         }

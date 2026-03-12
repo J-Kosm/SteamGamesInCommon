@@ -100,15 +100,15 @@ def process_shared_games_dict(shared_games_dict: dict):
     for game in shared_games_dict:
         if not Game.objects.filter(appid=game).exists(): 
             # print debug
-            print(f"New game: {shared_games_dict[game]["name"]}")
+            # print(f"New game: {shared_games_dict[game]["name"]}")
 
             game_tags = get_game_tags(game)
             game = Game(appid=game, name=shared_games_dict[game]["name"], img_icon_url=shared_games_dict[game]["img_icon_url"], tags=game_tags)
             game.save()
         else:
             # print debug
-            print(f"Old game: {shared_games_dict[game]["name"]}")
-
+            # print(f"Old game: {shared_games_dict[game]["name"]}")
+            pass
 
 def get_games_from_db(games_set: set):
     queryset = Game.objects.filter(appid__in=games_set).values("appid", "name", "img_icon_url", "tags")
@@ -119,4 +119,4 @@ def get_games_from_db(games_set: set):
 
 # from a list of users, get only their multiplayer games, and then return only those which they have in common.
 def get_shared_multiplayer_games():
-    return 
+    return

@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --bg-color: rgb(39, 35, 56);
+    --panel-color: rgb(66, 59, 90);
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans';
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: clamp(200px, 50%, 600px);
+}
+
+.panel {
+    background-color: var(--panel-color);
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+}
+.panel > h1, p {
+    margin: 0;
+    padding: 0 0 10px 0;
+}
+.panel > p {
+    margin: 0;
+    padding: 0px 0px 10px 0px;
+}
+
+h1, p, span, label {
+    color: white;
+}
+
+.error {
+    color: rgb(255, 44, 44);
+    font-weight: bold;
+}
