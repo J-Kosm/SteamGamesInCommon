@@ -115,8 +115,3 @@ def get_games_from_db(games_set: set):
     data = list(queryset)
     
     return data
-
-
-# from a list of users, get only their multiplayer games, and then return only those which they have in common.
-def get_shared_multiplayer_games():
-    return
