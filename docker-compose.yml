@@ -1,9 +1,7 @@
 services:
 
   nginx:
-    build:
-      context: .
-      dockerfile: ./nginx/dockerfile
+    build: ./nginx
     ports:
       - "80:80"
     volumes:
