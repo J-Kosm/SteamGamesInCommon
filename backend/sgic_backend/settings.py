@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "192.168.1.100", "159.65.242.59"]
 
 
 # Application definition
@@ -74,6 +74,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "sgic_backend.wsgi.application"
+ASGI_APPLICATION = "sgic_backend.asgi.application"
 
 
 # Database

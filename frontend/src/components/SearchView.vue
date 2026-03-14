@@ -15,7 +15,7 @@ export default {
     },
     methods: {
         async submitGet() {
-            const url = "http://localhost:8000/"
+            const url = "/api/"
             try {
                 const response = await api.get(url, {
                     params: {

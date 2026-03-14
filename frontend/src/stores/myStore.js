@@ -25,7 +25,6 @@ export const useMyStore = defineStore('myStore', {
             for (let i = 0; i < state.shared_games.length; i++) {
 
                 if (state.shared_games[i]["tags"].some(j => mutliplayer_tags.includes(j))) {
-                    console.log(state.shared_games[i]["name"])
                     shared_multiplayer_games.push(state.shared_games[i])
                 }
             }

@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 5173
 
 # Run Vite when the container starts
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "build"]

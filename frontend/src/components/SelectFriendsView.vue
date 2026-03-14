@@ -25,11 +25,9 @@ api.defaults.headers.common["X-CSRFToken"] = csrfToken
             // keep track of which friends were selected.
             onFriend_selected(id) {
                 if (!this.myStoreStore.selected_friends.has(id)) {
-                    console.log("Selected: " + id)
                     this.myStoreStore.selected_friends.add(id)
                 }
                 else {
-                    console.log("Deselected: " + id)
                     this.myStoreStore.selected_friends.delete(id)
                 }
             },

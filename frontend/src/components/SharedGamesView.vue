@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         async getSharedGames() {
-            const url = "http://localhost:8000/shared/"
+            const url = "/api/shared/"
             const data = {
                     selected_friends: Array.from(this.myStoreStore.get_selected_friends),
                     user_steam_id: this.myStoreStore.get_user_steam_id
