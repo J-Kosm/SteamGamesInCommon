@@ -1,4 +1,4 @@
-# Build Vue
+# Stage 1: Build Vue
 FROM node:20 AS frontend-build
 
 # Define /app as the working directory in the container
@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y iputils-ping
 
 # Copy package.json and similarly named files like package-lock.json to the working directory
 COPY ../frontend/package*.json ./
+# Copy the rest of the project, including index.html
 COPY ../frontend/ .
-
 
 # Install dependencies
 RUN npm install
@@ -17,7 +17,7 @@ RUN npm install
 # Build
 RUN npm run build
 
-# NGINX
+# NStage 2: GINX
 FROM nginx:latest
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
