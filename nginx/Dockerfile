@@ -1,21 +1,22 @@
-FROM node:20
+# Build Vue
+FROM node:20 AS frontend-build
 
 # Define /app as the working directory in the container
 WORKDIR /app
 
 # Copy package.json and similarly named files like package-lock.json to the working directory
-COPY package*.json ./
+COPY ../frontend/package*.json ./
 
 RUN apt-get update && apt-get install -y iputils-ping
 
 # Install dependencies, including Vite
 RUN npm install
-RUN npm install -D vite
+RUN npm run build
 
-# Copy the other application files
-COPY . .
+# NGINX
+FROM nginx:latest
 
-EXPOSE 5173
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Run Vite when the container starts
-CMD ["npm", "run", "build"]
+# Copy built Vue files
+COPY --from=frontend-build /app/dist /usr/share/nginx/html

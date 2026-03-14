@@ -1,7 +1,9 @@
 services:
 
   nginx:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: ./nginx/dockerfile
     ports:
       - "80:80"
     volumes:
@@ -13,18 +15,6 @@ services:
     networks:
       custom_net:
         ipv4_address: 10.5.0.5
-
-  frontend:
-    container_name: vue-frontend
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-    tty: true
-    networks:
-      custom_net:
-        ipv4_address: 10.5.0.2
 
   backend:
     container_name: django-backend
@@ -43,6 +33,10 @@ services:
     networks:
       custom_net:
         ipv4_address: 10.5.0.3
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             daphne -b 0.0.0.0 -p 8000 backend.asgi:application"
 
   database:
     container_name: postgresql-database
